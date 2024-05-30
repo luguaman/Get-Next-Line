@@ -1,47 +1,77 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: luguaman <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/15 17:13:27 by luguaman          #+#    #+#             */
-/*   Updated: 2023/11/27 17:56:42 by luguaman         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "get_next_line.h"
 
-char	*cpy(char *str,char *s, int pos)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
+	int		sizetotal;
+	char	*res;
 	int		i;
+	int		j;
 
 	i = 0;
-	while (str[pos] != '\0')
+	sizetotal = ft_strlen(s1) + ft_strlen(s2);
+	res = malloc(sizeof(char) * (sizetotal + 1));
+	if (!res || !s1 || !s2)
+		return (NULL);
+	while (s1[i] != 0)
 	{
-		if (str[pos + 1] == '\0')
-		{
-			i++;
-			break ;
-		}
-		if (str[pos] == '\n')
-		{
-			s[i] = '\n';
-			i++;
-			break ;
-		}
-		s[i] = str[pos];
-		pos++;
+		res[i] = s1[i];
 		i++;
 	}
-	s[i] = '\0';
-	return (s);
+	j = 0;
+	while (s2[j] != 0)
+	{
+		res[i] = s2[j];
+		i++;
+		j++;
+	}
+	res[sizetotal] = 0;
+	return (res);
 }
 
-void	open_file(int fd, char *str)
+char	*ft_strchr(const char *string, int searchedChar )
 {
-	ssize_t	bytes;
+	char	*str;
 
-	bytes = read(fd, str, BUFFER_SIZE);
-	str[bytes] = '\0';
+	str = (char *)string;
+	while (*str != searchedChar && *str != 0)
+		str++;
+	if (*str == searchedChar)
+		return (str);
+	else
+		return (NULL);
+}
+
+void	ft_bzero(void *s, size_t n)
+{
+	char	*str;
+	size_t	i;
+
+	str = (char *)s;
+	i = 0;
+	while (i < n)
+	{
+		str[i] = '\0';
+		i++;
+	}
+}
+
+void	*ft_calloc(size_t elementCount, size_t elementSize)
+{
+	char	*res;
+
+	res = malloc(elementSize * elementCount);
+	if (!res)
+		return (NULL);
+	ft_bzero(res, elementSize * elementCount);
+	return (res);
+}
+
+size_t	ft_strlen(const char *theString)
+{
+	int	i;
+
+	i = 0;
+	while (theString[i])
+		i++;
+	return (i);
 }
